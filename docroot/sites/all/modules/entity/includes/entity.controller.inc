@@ -107,7 +107,7 @@ interface EntityAPIControllerInterface extends DrupalEntityControllerInterface {
    *   content language of the current request.
    * @param $page
    *   (optional) If set will control if the entity is rendered: if TRUE
-   *   the entity will be rendered without its title, so that it can be embeded
+   *   the entity will be rendered without its title, so that it can be embedded
    *   in another context. If FALSE the entity will be displayed with its title
    *   in a mode suitable for lists.
    *   If unset, the page mode will be enabled if the current path is the URI
@@ -171,7 +171,7 @@ class EntityAPIController extends DrupalDefaultEntityController implements Entit
     if ($this->revisionKey) {
       // Compare revision id of the base and revision table, if equal then this
       // is the default revision.
-      $query->addExpression('base.' . $this->revisionKey . ' = revision.' . $this->revisionKey, $this->defaultRevisionKey);
+      $query->addExpression('CASE WHEN base.' . $this->revisionKey . ' = revision.' . $this->revisionKey . ' THEN 1 ELSE 0 END', $this->defaultRevisionKey);
     }
     return $query;
   }
@@ -373,10 +373,7 @@ class EntityAPIController extends DrupalDefaultEntityController implements Entit
       // Do nothing, in case invalid or no ids have been passed.
       return;
     }
-    // This transaction causes troubles on MySQL, see
-    // http://drupal.org/node/1007830. So we deactivate this by default until
-    // is shipped in a point release.
-    // $transaction = isset($transaction) ? $transaction : db_transaction();
+    $transaction = isset($transaction) ? $transaction : db_transaction();
 
     try {
       $ids = array_keys($entities);
@@ -400,9 +397,7 @@ class EntityAPIController extends DrupalDefaultEntityController implements Entit
       db_ignore_slave();
     }
     catch (Exception $e) {
-      if (isset($transaction)) {
-        $transaction->rollback();
-      }
+      $transaction->rollback();
       watchdog_exception($this->entityType, $e);
       throw $e;
     }
