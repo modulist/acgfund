@@ -1,0 +1,48 @@
+
+# Ignore files that may overwrite environment-sensitive configurations.
+docroot/.htaccess
+docroot/robots.txt
+docroot/sites/*/settings*.php
+
+# Ignore paths that contain cached content.
+docroot/sites/default/files/
+docroot/sites/default/private
+
+# Ignore logs and backups
+logs
+docroot/sites/default/private/backup_migrate
+
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.bz2
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.tgz
+
+# Logs and databases #
+######################
+*.log
+*.sql
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+._*
+
+# Vim generated files #
+######################
+*.un~
+
+# SASS #
+##########
+.sass-cache
