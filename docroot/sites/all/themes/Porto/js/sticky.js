@@ -1,64 +1,117 @@
 jQuery(document).ready(function ($) { 
  function stickymenu() {
+ 
+  if($("body").hasClass("boxed"))
+		return false;
 
-		if($("body").hasClass("boxed"))
+	var $this = this,
+		$body = $("body"),
+		header = $("#header"),
+		headerContainer = header.parent(),
+		menuAfterHeader = (typeof header.data('after-header') !== 'undefined'),
+		headerHeight = header.height(),
+		flatParentItems = $("#header.flat-menu ul.nav-main > li > a"),
+		logoWrapper = header.find(".logo"),
+		logo = header.find(".logo img"),
+		logoWidth = logo.attr("width"),
+		logoHeight = logo.attr("height"),
+		logoPaddingTop = parseInt(logo.attr("data-sticky-padding") ? logo.attr("data-sticky-padding") : "28"),
+		logoSmallWidth = parseInt(logo.attr("data-sticky-width") ? logo.attr("data-sticky-width") : "82"),
+		logoSmallHeight = parseInt(logo.attr("data-sticky-height") ? logo.attr("data-sticky-height") : "40");
+
+	if(menuAfterHeader) {
+		headerContainer.css("min-height", header.height());
+	}
+
+	$(window).afterResize(function() {
+		headerContainer.css("min-height", header.height());
+	});
+
+	$this.checkStickyMenu = function() {
+
+		if($body.hasClass("boxed") || $(window).width() < 991) {
+			$this.stickyMenuDeactivate();
+			header.removeClass("fixed")
 			return false;
+		}
 
-		var headerHeight = $("body > header").height();
-		var logo = $("header .logo img");
-		var $this = this;
-		var logoSmallHeight = 50;
+		if(!menuAfterHeader) {
 
-		$this.checkStickyMenu = function() {
+			if($(window).scrollTop() > ((headerHeight - 15) - logoSmallHeight)) {
 
-			if($(window).scrollTop() > headerHeight + logoSmallHeight && $(window).width() > 768) {
-
-				if($("body").hasClass("sticky-menu-active"))
-					return false;
-
-				$("body").addClass("sticky-menu-active");
-				logo
-					.height(logoSmallHeight)
-					.css("width", "auto");
+				$this.stickyMenuActivate();
 
 			} else {
 
-				$("body").removeClass("sticky-menu-active");
-				logo
-					.css("height", "auto")
-					.css("width", "auto");
+				$this.stickyMenuDeactivate();
+
+			}
+
+		} else {
+
+			if($(window).scrollTop() > header.parent().offset().top) {
+
+				header.addClass("fixed");
+
+			} else {
+
+				header.removeClass("fixed");
 
 			}
 
 		}
 
-		$(window).on("scroll", function() {
+	}
 
-			$this.checkStickyMenu();
+	$this.stickyMenuActivate = function() {
 
-		});
+		if($body.hasClass("sticky-menu-active"))
+			return false;
 
-		$(window).on("resize", function() {
+		logo.stop(true, true);
 
-			$this.checkStickyMenu();
+		$body.addClass("sticky-menu-active").css("padding-top", headerHeight);
+		flatParentItems.addClass("sticky-menu-active");
 
-		});
+		logoWrapper.addClass("logo-sticky-active");
+
+		logo.animate({
+			width: logoSmallWidth,
+			height: logoSmallHeight,
+			top: logoPaddingTop + "px"
+		}, 200, function() {});
+
+	}
+
+	$this.stickyMenuDeactivate = function() {
+
+		if($body.hasClass("sticky-menu-active")) {
+
+			$body.removeClass("sticky-menu-active").css("padding-top", 0);
+			flatParentItems.removeClass("sticky-menu-active");
+
+			logoWrapper.removeClass("logo-sticky-active");
+
+			logo.animate({
+				width: logoWidth,
+				height: logoHeight,
+				top: "0px"
+			}, 200);
+
+		}
+
+	}
+
+
+	$(window).on("scroll", function() {
 
 		$this.checkStickyMenu();
 
-		// Anchors Position
-		$("a[data-hash]").on("click", function(e) {
+	});
 
-			e.preventDefault();
-			var target = $(this.hash);
+	$this.checkStickyMenu();
 
-			if(target.get(0))
-				$("html,body").animate({scrollTop: target.offset().top - (150)}, 300);
-
-			return false;
-
-		});
-		
+			
 	}
 	
 	stickymenu();

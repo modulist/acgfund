@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @file views-view--portfolio-mason-three.tpl.php
- * Contour's views template for the Portfolio Mason (third style) view.
+ * @file
+ * Main view template.
  *
  * Variables available:
  * - $classes_array: An array of classes determined in
@@ -27,62 +27,76 @@
  * @ingroup views_templates
  */
 ?>
+<div class="map-section">
+	<section class="featured footer map">
+		<div class="container">
+			<div class="row">
+			
+				<div class="col-md-6">
 
-<div class="row">
-  <div class="flexslider unstyled" data-plugin-options='{"directionNav":false, "animation":"slide", "animationLoop":false,"animation":"slide","itemWidth":300,"itemMargin":0}'>
-	  <ul class="slides">
-	  <?php print render($title_prefix); ?>
-	  <?php print render($title_suffix); ?>
-	  <?php if ($exposed): ?>
-	    <div class="view-filters">
-	      <?php print $exposed; ?>
-	    </div>
-	  <?php endif; ?>
-	
-	  <?php if ($attachment_before): ?>
-	    <div class="attachment attachment-before">
-	      <?php print $attachment_before; ?>
-	    </div>
-	  <?php endif; ?>
-	  
-	  <?php if ($header): ?>
-	    <?php print $header; ?>
-	   <?php endif; ?>
-	
-	  <?php if ($rows): ?>
-	    <?php print $rows; ?>
-	  <?php elseif ($empty): ?>
-	    <div class="view-empty">
-	      <?php print $empty; ?>
-	    </div>
-	  <?php endif; ?>
-	
-	  <?php if ($pager): ?>
-	    <?php print $pager; ?>
-	  <?php endif; ?>
-	
-	  <?php if ($attachment_after): ?>
-	    <div class="attachment attachment-after">
-	      <?php print $attachment_after; ?>
-	    </div>
-	  <?php endif; ?>
-	
-	  <?php if ($more): ?>
-	    <?php print $more; ?>
-	  <?php endif; ?>
-	
-	  <?php if ($footer): ?>
-	    <div class="view-footer">
-	      <?php print $footer; ?>
-	    </div>
-	  <?php endif; ?>
-	
-	  <?php if ($feed_icon): ?>
-	    <div class="feed-icon">
-	      <?php print $feed_icon; ?>
-	    </div>
-	  <?php endif; ?>
-	  </ul>
-	  
-  </div>  
-</div>
+					<div class="recent-posts push-bottom">
+					  <?php if ($header): ?>
+				      <?php print $header; ?>
+				    <?php endif; ?>
+						<div class="row">
+						
+						  <div class="owl-carousel" data-plugin-options='{"items": 1, "autoHeight": true}'>
+							  <?php print render($title_prefix); ?>
+							  <?php print render($title_suffix); ?>
+							  <?php if ($exposed): ?>
+						    <div class="view-filters">
+						      <?php print $exposed; ?>
+						    </div>
+							  <?php endif; ?>
+							
+							  <?php if ($attachment_before): ?>
+						    <div class="attachment attachment-before">
+						      <?php print $attachment_before; ?>
+						    </div>
+							  <?php endif; ?>
+							  
+							  							
+							  <?php if ($rows): ?>
+							    <?php print $rows; ?>
+							  <?php elseif ($empty): ?>
+						    <div class="view-empty">
+						      <?php print $empty; ?>
+						    </div>
+							  <?php endif; ?>
+							
+							  <?php if ($pager): ?>
+							    <?php print $pager; ?>
+							  <?php endif; ?>
+							
+							  <?php if ($attachment_after): ?>
+						    <div class="attachment attachment-after">
+						      <?php print $attachment_after; ?>
+						    </div>
+							  <?php endif; ?>
+							
+							  <?php if ($more): ?>
+							    <?php print $more; ?>
+							  <?php endif; ?>
+							
+							  <?php if ($feed_icon): ?>
+						    <div class="feed-icon">
+						      <?php print $feed_icon; ?>
+						    </div>
+							  <?php endif; ?>
+
+							</div><!-- end owl carousel -->
+						</div>
+					</div>
+					
+				</div><!-- end col-md-6 -->
+				
+				<?php if ($footer): ?>
+				<div class="col-md-6">
+				  <?php print $footer; ?>
+				</div>
+				<?php endif; ?>
+				
+			</div>
+		</div>
+  </section>
+</div> 

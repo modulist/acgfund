@@ -16,3 +16,4 @@
     <?php print $row; ?>
   <?php endforeach; ?>
 </ul>
+<hr>

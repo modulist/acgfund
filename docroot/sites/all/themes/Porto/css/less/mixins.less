@@ -28,14 +28,13 @@
 	.gradientBar(@startColor, @endColor, @textColor, @textShadow);
 	.reset-filter();
 
-	&:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
-		color: @textColor;
-		background-color: @endColor;
+	&:hover {
+		border-color: @endColor;
+		background-color: lighten(@endColor, 5%);
 	}
 
-	&:active,
-	&.active {
-		background-color: darken(@endColor, 10%) e("\9");
+	&:active {
+		background-color: darken(@endColor, 10%);
 	}
 }
 

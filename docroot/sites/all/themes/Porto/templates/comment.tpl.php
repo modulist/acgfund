@@ -10,7 +10,7 @@ global $parent_root;
 <ul class="comments">
   <li>
     <div class="comment">
-		  <div class="thumbnail">
+		  <div class="img-thumbnail">
 		    <?php 
 		      if (!$picture) {
 		        echo '<img src="'.$parent_root.'/img/anon.png" alt="anon">'; 

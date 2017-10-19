@@ -31,7 +31,7 @@
 <div class="tabs">
 
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#popularPosts" data-toggle="tab"><i class="icon-star"></i> <?php print t('Popular'); ?></a></li>
+		<li class="active"><a href="#popularPosts" data-toggle="tab"><i class="icon icon-star"></i> <?php print t('Popular'); ?></a></li>
 		<li><a href="#recentPosts" data-toggle="tab"><?php print t('Recent'); ?></a></li>
 	</ul>
 	

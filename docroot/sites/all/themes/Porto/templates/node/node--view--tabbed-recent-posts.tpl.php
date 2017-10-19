@@ -13,6 +13,5 @@
   <div class="post-info">
     <a href="<?php print $node_url; ?>" class="tabbed-title"><?php echo $title; ?></a>
     <div class="post-meta"><?php print format_date($node->created, 'custom', 'M d, Y'); ?></div>
-  
   </div>    
 </li>  

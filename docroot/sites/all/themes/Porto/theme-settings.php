@@ -43,6 +43,13 @@ function porto_form_system_theme_settings_alter(&$form, &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('General'),
   );
+  
+    // Breadcrumbs
+    $form['options']['general']['rtl'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('RTL'),
+      '#default_value' => theme_get_setting('rtl'),
+    );
             
     // Breadcrumbs
     $form['options']['general']['breadcrumbs'] = array(
@@ -58,18 +65,55 @@ function porto_form_system_theme_settings_alter(&$form, &$form_state) {
       '#default_value' => theme_get_setting('sticky_header'),
     );
     
+    // Logo Height
+      $form['options']['general']['logo_height'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Logo Height'),
+        '#default_value' => theme_get_setting('logo_height'),
+      );   
+      
+    // Sticky Logo Height
+      $form['options']['general']['sticky_logo_height'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Sticky Header Logo Height'),
+        '#default_value' => theme_get_setting('sticky_logo_height'),
+        '#states' => array (
+          'invisible' => array(
+            'input[name="sticky_header"]' => array('checked' => FALSE)
+          )
+        )
+      );   
+    
   // Color
   $form['options']['color'] = array(
     '#type' => 'fieldset',
     '#title' => t('Color'),
   );  
   
-    // Custom Background Color
+    // Custom Skin Color
     $form['options']['color']['skin_color'] =array(
       '#type' => 'jquery_colorpicker',
 	    '#title' => t('Color Scheme'),
 	    '#default_value' => theme_get_setting('skin_color'),
     ); 
+    
+    // Gradient
+    $form['options']['color']['gradient'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Gradient'),
+      '#default_value' => theme_get_setting('gradient'),
+    );
+    
+    // Background Color
+    $form['options']['color']['background_color'] = array(
+      '#type' => 'select',
+      '#title' => t('Background Color'),
+      '#default_value' => theme_get_setting('background_color'),
+      '#options' => array(
+        'light' => t('Light (default)'),
+        'dark' => t('Dark'),
+      ),
+    );
     
   // Layout
   $form['options']['layout'] = array(
@@ -159,9 +203,9 @@ function porto_form_system_theme_settings_alter(&$form, &$form_state) {
         '#title' => t('Portfolio Columns'),
         '#default_value' => theme_get_setting('portfolio_columns'),
         '#options' => array(
-          'span6' => 'Two',
-          'span4' => 'Three',
-          'span3' => 'Four (default)',
+          'col-md-6' => 'Two',
+          'col-md-4' => 'Three',
+          'col-md-3' => 'Four (default)',
         ),
       ); 
       
@@ -188,61 +232,7 @@ function porto_form_system_theme_settings_alter(&$form, &$form_state) {
         '#title' => t('Add your own CSS'),
         '#default_value' => theme_get_setting('user_css'),
       ); 
-        
-  // Twitter
-  $form['options']['twitter'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Twitter API'),
-  );    
-  
-     // Twitter App Consumer Key
-    $form['options']['twitter']['twitter_app_consumer_key'] =array(
-      '#type' => 'textfield',
-      '#title' => t('Twitter App Consumer Key'),
-      '#default_value' => theme_get_setting('twitter_app_consumer_key'),
-      '#states' => array (
-        'invisible' => array(
-          'input[name="enable_twitter_feed"]' => array('checked' => FALSE)
-        )
-      )
-    );
-    
-    // Twitter App Consumer Secret
-    $form['options']['twitter']['twitter_app_consumer_secret'] =array(
-      '#type' => 'textfield',
-      '#title' => t('Twitter App Consumer Secret'),
-      '#default_value' => theme_get_setting('twitter_app_consumer_secret'),
-      '#states' => array (
-        'invisible' => array(
-          'input[name="enable_twitter_feed"]' => array('checked' => FALSE)
-        )
-      )
-    );
-    
-    // Twitter App Access Token
-    $form['options']['twitter']['twitter_app_access_token'] =array(
-      '#type' => 'textfield',
-      '#title' => t('Twitter App Access Token'),
-      '#default_value' => theme_get_setting('twitter_app_access_token'),
-      '#states' => array (
-        'invisible' => array(
-          'input[name="enable_twitter_feed"]' => array('checked' => FALSE)
-        )
-      )
-    );
-    
-    // Twitter App Access Token Secret
-    $form['options']['twitter']['twitter_app_access_secret'] =array(
-      '#type' => 'textfield',
-      '#title' => t('Twitter App Access Token Secret'),
-      '#default_value' => theme_get_setting('twitter_app_access_secret'),
-      '#states' => array (
-        'invisible' => array(
-          'input[name="enable_twitter_feed"]' => array('checked' => FALSE)
-        )
-      )
-    );
-    
+            
   // Footer
   $form['options']['footer'] = array(
     '#type' => 'fieldset',

@@ -1,3 +1,63 @@
+2.0.7 (01/08/15)
+  *Added RTL support.
+  *Updated Owl Carousel.
+  *Updated MD Slider.
+  
+2.0.6 (11/27/14)
+  *Fixed PHP timeout error on unpublished nodes utilizing theme pagination.
+  *Fixed issue in article template files related to disabling Comment module.
+  *Updated Drupal core in full install.
+  *Fixed portfolio pagination bug.
+
+2.0.5 (11/06/14)
+  *Fix for missing icons related to 2.0.4 update.
+  *Fixed issue with menu/button gradient.
+  *Fixed issue with search input text.
+  *Updated Drupal core in full install.
+
+2.0.4 (09/30/14)
+  *Added basic Drupal forum styles.
+  *Added "One Page" content type and page template for better "One Page" layout support.
+  *Added Bootstrap 3 alert classes to Drupal message wrappers.
+  *Improved mobile menu parent link functionality.
+  *Revised footer region markup.
+  *Updated MD Slider.
+
+2.0.3 (08/19/14)
+  *Removed all !important tags from .less files for better customization support.
+  *Updated Font Awesome to version 4.10.
+  *Max width for latest projects content image.
+  *Fixed issue with active class on portfolio filter buttons.
+  *Bootstrap.css now called in html.tpl.php to fix @import conflict with respond.js(IE8 fix).
+  *Updated Drupal core in full install.
+  *Updated documentation.
+
+2.0.2 (07/29/14)
+  *Added logo height setting for regular and sticky header layout.
+  *Removed extra </div> from contact template.
+  *Fixed issue with "latest posts" view and odd number of items.
+  *Modified output of body field in FAQ node template.
+  *Improved responsive appearance of NivoSlider.
+  *Updated Drupal core in full install.
+  *Updated MD Slider.
+  *Other minor fixes.
+
+2.0.1 (07/03/14)
+  *Fixed issue with sub-menu links in mobile navigation.
+  *Fixed issue with "Home Concept" circle URLs.
+  *Fixed minor layout issue with Bootstrap modal footer buttons.
+  *Fixed disappearing menu when last menu item has children.
+  *Fixed PHP error in porto_item_list function.
+
+2.0 (06/18/14)
+  *Updated Bootstrap to version 3.1.1.
+  *New "Dark" background color option.
+  *Replaced Flexslider with Owl Carousel.
+  *New sections/layouts including Video Background, Portfolio Full Width, Team Member etc. 
+  *Updated Drupal Core in full install.
+  *Updated "Mega Slider" module to latest version.
+  *Style and layout improvements.
+
 1.3 (04/01/14)
   *Additional improvements for special characters in taxonomy terms.
   *Updated Drupal Core in full demo install.

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @file views-view--portfolio-mason-three.tpl.php
- * Porto's views template for the Portfolio Mason (third style) view.
+ * @file
+ * Main view template.
  *
  * Variables available:
  * - $classes_array: An array of classes determined in

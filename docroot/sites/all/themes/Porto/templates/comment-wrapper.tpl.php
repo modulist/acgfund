@@ -8,7 +8,7 @@
 
   <?php if ($content['comments'] && $node->type != 'forum'): ?>
     <?php print render($title_prefix); ?>
-    	<h3><i class="icon-comments"></i><?php print t('Comments'); ?> (<?php print $node->comment_count; ?>)</h3>
+    	<h3><i class="icon icon-comments"></i><?php print t('Comments'); ?> (<?php print $node->comment_count; ?>)</h3>
     <?php print render($title_suffix); ?>
   <?php endif; ?>
   

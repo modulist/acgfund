@@ -1,10 +1,34 @@
 <?php 
+
 /**
  * Define $root global variable.
  */
-global $theme_root, $parent_root, $theme_path;
+global $theme_root, $parent_root;
 $theme_root = base_path() . path_to_theme();
 $parent_root = base_path() . drupal_get_path('theme', 'porto');
+
+
+/**
+*  Implements theme_js_alter().
+*/
+function porto_js_alter(&$js) {
+ global $user; 
+ if ((theme_get_setting('site_layout') != 'wide') || (theme_get_setting('sticky_header') != '1') || (in_array('administrator', array_values($user->roles)))) {
+   unset($js[drupal_get_path('theme', 'porto') . '/js/sticky.js']);
+ }
+}
+
+/**
+*  Implements theme_css_alter().
+*/
+function porto_css_alter(&$css) {
+ if (theme_get_setting('rtl') == 1) {
+	 unset($css[drupal_get_path('theme', 'porto') . '/css/theme.css']);
+	 unset($css[drupal_get_path('theme', 'porto') . '/css/theme-elements.css']);
+	 unset($css[drupal_get_path('theme', 'porto') . '/css/theme-blog.css']);
+	 unset($css[drupal_get_path('theme', 'porto') . '/css/ie.css']);
+ }
+}
 
 /**
  * Implements hook_html_head_alter().
@@ -38,20 +62,88 @@ function porto_button($variables) {
   return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }
 
+/**
+ * Implements theme_menu_local_tasks().
+ */
+function porto_menu_local_tasks(&$variables) {
+  $output = '';
+
+  if (!empty($variables['primary'])) {
+    $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
+    $variables['primary']['#prefix'] .= '<ul class="nav nav-tabs">';
+    $variables['primary']['#suffix'] = '</ul>';
+    $output .= drupal_render($variables['primary']);
+  }
+  if (!empty($variables['secondary'])) {
+    $variables['secondary']['#prefix'] = '<h2 class="element-invisible">' . t('Secondary tabs') . '</h2>';
+    $variables['secondary']['#prefix'] .= '<ul class="nav nav-tabs">';
+    $variables['secondary']['#suffix'] = '</ul>';
+    $output .= drupal_render($variables['secondary']);
+  }
+
+  return $output;
+}
+
+/**
+* Add several style-related elements into the <head> tag.
+*/
+function porto_preprocess_html(&$vars){
+ global $parent_root;
+ 
+ if (theme_get_setting('rtl') == 1) {
+	 drupal_add_css(drupal_get_path('theme', 'porto') . '/css/theme-rtl.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	 drupal_add_css(drupal_get_path('theme', 'porto') . '/css/theme-elements-rtl.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	 drupal_add_css(drupal_get_path('theme', 'porto') . '/css/theme-blog-rtl.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	 drupal_add_css(drupal_get_path('theme', 'porto') . '/css/ie-rtl.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+ }
+ 
+ $viewport = array(
+   '#type' => 'html_tag',
+   '#tag' => 'meta',
+   '#attributes' => array(
+     'name' => 'viewport',
+     'content' =>  'width=device-width, initial-scale=1, maximum-scale=1',
+   ),
+   '#weight' => 1,
+ );
+
+  $background_image = array(
+   '#type' => 'markup',
+   '#markup' => "<style type='text/css'>body {background-image:url(".$parent_root."/img/patterns/".theme_get_setting('background_select').".png);}</style> ",
+   '#weight' => 2,
+ );
+
+ $background_color = array(
+   '#type' => 'markup',
+   '#markup' => "<style type='text/css'>body {background-color: #".theme_get_setting('body_background_color')." !important;}</style> ",
+   '#weight' => 3,
+ );
+ 
+ drupal_add_html_head( $viewport, 'viewport');
+
+ if (theme_get_setting('body_background') == "porto_backgrounds" && theme_get_setting('site_layout') == "boxed") {
+   drupal_add_html_head( $background_image, 'background_image');
+ }
+
+ if (theme_get_setting('body_background') == "custom_background_color") {
+   drupal_add_html_head( $background_color, 'background_color');
+ }
+ // Add boxed class if layout is set that way.
+ if (theme_get_setting('site_layout') == 'boxed'){
+   $vars['classes_array'][] = 'boxed';
+ }
+ 
+}
 
 /**
  * Assign theme hook suggestions for custom templates and pass color theme setting
  * to skin.less file.
  */  
 function porto_preprocess_page(&$vars, $hook) {
+   
   if (isset($vars['node'])) {
     $suggest = "page__node__{$vars['node']->type}";
     $vars['theme_hook_suggestions'][] = $suggest;
-  }
-  
-  $status = drupal_get_http_header("status");  
-  if($status == "404 Not Found") {      
-    $vars['theme_hook_suggestions'][] = 'page__404';
   }
   
   if (arg(0) == 'taxonomy' && arg(1) == 'term' ){
@@ -62,19 +154,37 @@ function porto_preprocess_page(&$vars, $hook) {
   if (request_path() == 'one-page') {
     $vars['theme_hook_suggestions'][] = 'page__onepage';
   }  
-  
-  //Pass the color value from theme settings to @skinColor variable in skin.less
-  drupal_add_css(drupal_get_path('theme', 'porto') .'/css/less/skin.less', array(
-  
-    'group' => CSS_THEME,
-    'preprocess' => false,
-    'less' => array(
-      'variables' => array(
-        '@skinColor' => '#'.theme_get_setting('skin_color').'',
-      ),
-    ),
-
-  )); 
+ 
+  if (theme_get_setting('gradient') == "1") {
+	  //Pass the color value from theme settings to @skinColor variable in skin.less
+	  drupal_add_css(drupal_get_path('theme', 'porto') .'/css/less/skin-gradient.less', array(
+	  
+	    'group' => CSS_THEME,
+	    'preprocess' => false,
+	    'less' => array(
+	      'variables' => array(
+	        '@skinColor' => '#'.theme_get_setting('skin_color').'',
+	      ),
+	    ),
+	
+	  )); 
+	} 
+	
+	if (theme_get_setting('gradient') == "0") {
+	  //Pass the color value from theme settings to @skinColor variable in skin.less
+	  drupal_add_css(drupal_get_path('theme', 'porto') .'/css/less/skin.less', array(
+	  
+	    'group' => CSS_THEME,
+	    'preprocess' => false,
+	    'less' => array(
+	      'variables' => array(
+	        '@skinColor' => '#'.theme_get_setting('skin_color').'',
+	      ),
+	    ),
+	
+	  )); 
+	}
+	 
 }
 
 /**
@@ -97,17 +207,20 @@ function porto_process_page(&$variables) {
  * Add list classes for links in "Header Menu" region.
  */
 function porto_menu_link__header_menu(array $variables) {
+  $output = '';
   unset($variables['element']['#attributes']['class']);
   $element = $variables['element'];
   static $item_id = 0;
   $menu_name = $element['#original_link']['menu_name'];
-  
+
   // set the global depth variable
   global $depth;
   $depth = $element['#original_link']['depth'];
 
   if ( ($element['#below']) && ($depth == "1") ) {
-    $element['#attributes']['class'][] = 'dropdown';
+    $output .= '<a class="dropdown-toggle extra" href="#"></a>';
+    $element['#attributes']['class'][] = 'dropdown '.$element['#original_link']['mlid'].'';
+    $element['#localized_options']['attributes']['class'][] = 'dropdown-toggle disabled';
   }
   
   if ( ($element['#below']) && ($depth == "2") ) {
@@ -115,34 +228,123 @@ function porto_menu_link__header_menu(array $variables) {
   }
   
   $sub_menu = $element['#below'] ? drupal_render($element['#below']) : '';
-  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  $output .= l($element['#title'], $element['#href'], $element['#localized_options']);
   // if link class is active, make li class as active too
   if(strpos($output,"active")>0){
     $element['#attributes']['class'][] = "active";
   }
-
+ 
   return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . '</li>';
+  
 }
 
 /**
- * Define menu UL class for "Header Menu" region.
+ * Define class for first menu UL.
  */
 function porto_menu_tree__header_menu($variables){
-  
-  // use global depth variable to define ul class
-  global $depth;
-  $class = ($depth == 1) ? 'nav nav-pills nav-main' : 'dropdown-menu';
-  return '<ul class="'.$class.' porto-nav">' . $variables['tree'] . '</ul>';
+  return '<ul class="nav nav-pills nav-main" id="mainMenu">' . $variables['tree'] . '</ul>';
   
 }
 
 /**
- * Implements hook_block_view_alter() for "Header Menu" region.
+ * Define class for all other menu ULs.
+ */
+function porto_menu_tree__header_menu_below($variables){
+  return '<ul class="dropdown-menu">' . $variables['tree'] . '</ul>';
+}
+
+/**
+ * Impelements theme_status_messages()
+ */
+function porto_status_messages($variables) {
+  $display = $variables['display'];
+  $output = '';
+
+  $status_heading = array(
+    'status' => t('Status message'),
+    'error' => t('Error message'),
+    'warning' => t('Warning message'),
+  );
+  foreach (drupal_get_messages($display) as $type => $messages) {
+    switch ($type) {
+	    case 'status':
+	      $output .= "<div class=\"alert alert-success\">\n";
+	    break;
+	    case 'warning':
+	      $output .= "<div class=\"alert alert-warning\">\n";
+	    break;
+	    case 'error':
+	      $output .= "<div class=\"alert alert-danger\">\n";
+	    break;
+	    default: 
+	      $output .= "<div class=\"messages $type\">\n";
+	    break;
+    }
+    if (!empty($status_heading[$type])) {
+      $output .= '<h2 class="element-invisible">' . $status_heading[$type] . "</h2>\n";
+    }
+    if (count($messages) > 1) {
+      $output .= " <ul>\n";
+      foreach ($messages as $message) {
+        $output .= '  <li>' . $message . "</li>\n";
+      }
+      $output .= " </ul>\n";
+    }
+    else {
+      $output .= $messages[0];
+    }
+    $output .= "</div>\n";
+  }
+  return $output;
+}
+
+/**
+ * Impelements hook_form_alter()
+ */
+function porto_form_alter(&$form, &$form_state, $form_id) {
+  
+  if ($form_id == 'search_block_form') {
+    
+    $form['search_block_form']['#title'] = t('Search'); // Change the text on the label element
+    $form['search_block_form']['#title_display'] = 'invisible'; // Toggle label visibilty
+    $form['search_block_form']['#size'] = 40;  // define size of the textfield
+    $form['search_block_form']['#title'] = t('Search'); // Change the text on the label element
+    $form['search_block_form']['#title_display'] = 'invisible'; // Toggle label visibilty
+    $form['search_block_form']['#attributes']['class'] = array('form-control', 'search');
+    
+    // Add/remove default text on input status.
+    $form['search_block_form']['#attributes']['onblur'] = "if (this.value == '') {this.value = 'Search';}";
+    $form['search_block_form']['#attributes']['onfocus'] = "if (this.value == 'Search') {this.value = '';}";
+    
+     // Prevent user from searching the default text.
+    $form['#attributes']['onsubmit'] = "if(this.search_block_form.value=='Search'){ alert('Please enter a search'); return false; }";
+    
+     // Alternative (HTML5) placeholder attribute instead of using the javascript
+    $form['search_block_form']['#attributes']['placeholder'] = t('Search');
+       
+    $form['actions']['submit'] =  array(
+      '#type' => 'submit',
+    	'#prefix' => '<span class="input-group-btn"><button class="btn btn-default" type="submit"><i class="icon icon-search">',
+    	'#suffix' => '</i></button></span>',
+    	
+    );
+    
+  }
+} 
+
+/**
+ * Implements hook_block_view_alter().
  */
 function porto_block_view_alter(&$data, $block) {
 
-  if ($block->region == 'header_menu') {
-   
+  if ( $block->region == 'header_search' && isset($data['content']) ) {
+    // Unset some additional wrappers in the Header Search region.
+  	unset($data['content']['search_block_form']['#theme_wrappers']);
+    unset($data['content']['actions']['#theme_wrappers']);
+    unset($data['content']['actions']['submit']['#theme_wrappers']);
+  }
+
+  if ( ($block->region == 'header_menu') && !isset($data['content']['#type']) ) {   
     $data['content']['#theme_wrappers'] = array('menu_tree__header_menu');
 
     foreach($data['content'] as &$key):
@@ -151,8 +353,9 @@ function porto_block_view_alter(&$data, $block) {
         $key['#theme'] = 'menu_link__header_menu';
       }
       if (isset($key['#below']['#theme_wrappers'])) {
-        $key['#below']['#theme_wrappers'] = array('menu_tree__header_menu');
+        $key['#below']['#theme_wrappers'] = array('menu_tree__header_menu_below');
       }
+      
       if (isset($key['#below'])) {
         foreach($key['#below'] as &$key2):
         
@@ -160,7 +363,7 @@ function porto_block_view_alter(&$data, $block) {
              $key2['#theme'] = 'menu_link__header_menu';
            }
            if (isset($key2['#below']['#theme_wrappers'])) {
-             $key2['#below']['#theme_wrappers'] = array('menu_tree__header_menu');
+             $key2['#below']['#theme_wrappers'] = array('menu_tree__header_menu_below');
            }
            if (isset($key2['#below'])) {
               foreach($key2['#below'] as &$key3):
@@ -175,7 +378,6 @@ function porto_block_view_alter(&$data, $block) {
        
       }
     endforeach;
-
   }
 }
 
@@ -192,22 +394,6 @@ function porto_links($variables) {
 }
 
 /**
- * Customize search form.
- */
-function porto_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'search_block_form') {
-  
-    unset($form['search_block_form']['#title']);
-    
-    $form['search_block_form']['#title_display'] = 'invisible';
-    $form_default = t('Search...');
-    $form['search_block_form']['#default_value'] = $form_default;
-    $form['actions']['submit'] = array('#type' => 'image_button', '#src' => base_path() . drupal_get_path('theme', 'porto') . '/img/search_icon.png', '#alt' => 'search');
-    $form['search_block_form']['#attributes'] = array('onblur' => "if (this.value == '') {this.value = '{$form_default}';}", 'onfocus' => "if (this.value == '{$form_default}') {this.value = '';}" );
-  }
-} 
-
-/**
  * Put Breadcrumbs in a ul li structure and add descending z-index style to each <a href> tag.
  */
 function porto_breadcrumb($variables) {
@@ -218,9 +404,9 @@ function porto_breadcrumb($variables) {
  if (!empty($breadcrumb)) {
    $crumbs = '<ul class="breadcrumb">';
    foreach($breadcrumb as $value) {
-     $crumbs .= '<li>'.$value.' <span class="divider">/</span></li> ';
+     $crumbs .= '<li>'.$value.'</li> ';
    }
-   $crumbs .= '<li class="active"></li>';
+   
    $crumbs .= '</ul>';
     
  }
@@ -244,24 +430,100 @@ function porto_preprocess_username(&$vars) {
 }
 
 /**
+ * Theme node pagination function().
+ */
+function porto_node_pagination($node, $mode = 'n') {
+  $query = new EntityFieldQuery();
+	$query
+    ->entityCondition('entity_type', 'node')
+    ->propertyCondition('status', 1)
+    ->entityCondition('bundle', $node->type);
+  $result = $query->execute();
+  $nids = array_keys($result['node']);
+  
+  while ($node->nid != current($nids)) {
+    next($nids);
+  }
+  
+  switch($mode) {
+    case 'p':
+      prev($nids);
+    break;
+		
+    case 'n':
+      next($nids);
+    break;
+		
+    default:
+    return NULL;
+  }
+  
+  return current($nids);
+}
+
+
+/**
  * Overrides theme_item_list().
  */
-function porto_item_list($vars) {
-  if (isset($vars['attributes']['class']) && in_array('pager', $vars['attributes']['class'])) {
-    unset($vars['attributes']['class']);
-    foreach ($vars['items'] as $i => &$item) {
-      if (in_array('pager-current', $item['class'])) {
+function porto_item_list($variables) {
+  $items = $variables['items'];
+  $title = $variables['title'];
+  $type = $variables['type'];
+  $variables['attributes']['class'] = 'pagination pagination-lg pull-right';
+  $attributes = $variables['attributes'];
+
+  // Only output the list container and title, if there are any list items.
+  // Check to see whether the block title exists before adding a header.
+  // Empty headers are not semantic and present accessibility challenges.
+  $output = '';
+  if (isset($title) && $title !== '') {
+    $output .= '<h3>' . $title . '</h3>';
+  }
+
+  if (!empty($items)) {
+    $output .= "<$type" . drupal_attributes($attributes) . '>';
+    $num_items = count($items);
+    $i = 0;
+    foreach ($items as $item) {
+      $attributes = array();
+      $children = array();
+      $data = '';
+      $i++;
+      
+      //if ( is_array($item) && in_array('pager-current', $item['class'])) {
+      if ( isset($item['class']) && is_array($item) && in_array('pager-current', $item['class'])) {
         $item['class'] = array('active');
         $item['data'] = '<a href="#">' . $item['data'] . '</a>';
       }
-      elseif (in_array('pager-ellipsis', $item['class'])) {
-        $item['class'] = array('disabled');
-        $item['data'] = '<a href="#">' . $item['data'] . '</a>';
+
+      if (is_array($item)) {
+        foreach ($item as $key => $value) {
+          if ($key == 'data') {
+            $data = $value;
+          }
+          elseif ($key == 'children') {
+            $children = $value;
+          }
+          else {
+            $attributes[$key] = $value;
+          }
+        }
       }
+      else {
+        $data = $item;
+      }
+      if (count($children) > 0) {
+        // Render nested list.
+        $data .= theme_item_list(array('items' => $children, 'title' => NULL, 'type' => $type, 'attributes' => $attributes));
+      }
+      
+      $output .= '<li' . drupal_attributes($attributes) . '>' . $data . "</li>\n";
     }
-    return '<div class="pagination pagination-large pull-right">' . theme_item_list($vars) . '</div>';
+    $output .= "</$type>";
   }
-  return theme_item_list($vars);
+  
+  return $output;
+
 }
 
 /**
@@ -293,6 +555,14 @@ function porto_field($variables) {
   }
   
   elseif ($variables['element']['#field_name'] == 'field_team_bio') {
+    // For tags, concatenate into a single, comma-delimitated string.
+    foreach ($variables['items'] as $delta => $item) {
+      $rendered_tags[] = drupal_render($item);
+    }
+    $output .= implode(', ', $rendered_tags);
+  }
+  
+   elseif ($variables['element']['#field_name'] == 'field_team_category') {
     // For tags, concatenate into a single, comma-delimitated string.
     foreach ($variables['items'] as $delta => $item) {
       $rendered_tags[] = drupal_render($item);
@@ -416,77 +686,11 @@ function porto_field($variables) {
  * User CSS function. Separate from porto_preprocess_html so function can be called directly before </head> tag.
  */
 function porto_user_css() {
-  echo "<!-- User defined CSS -->";
-  echo "<style type='text/css'>";
-  echo theme_get_setting('user_css');
-  echo "</style>";
-  echo "<!-- End user defined CSS -->";	
-}
-
-/**
-*  Unset the sticky.js if theme settings don't allow or user is logged in.
-*/
-function porto_js_alter(&$js) {
- if ((theme_get_setting('site_layout') != 'wide') || (theme_get_setting('sticky_header') != '1') || (user_is_logged_in())) {
-   global $parent_root;
-   unset($js[drupal_get_path('theme', 'porto') . '/js/sticky.js']);
- }
-}
-/**
-*  Unset Bootstrap stylesheets depending on theme settings.
-*/
-function porto_css_alter(&$css) {
- // If we don't have a boxed layout unset the css.
- if (theme_get_setting('site_layout') != "boxed") {
-   global $parent_root;
-   unset($css[drupal_get_path('theme', 'porto') . '/css/bootstrap-responsive-boxed.css']);
- }
-   // If we don't have a boxed layout unset the css.
- if (theme_get_setting('site_layout') != "wide") {
-   global $parent_root;
-   unset($css[drupal_get_path('theme', 'porto') . '/css/bootstrap-responsive.css']);
- }
-}
-
-/**
-* Add several style-related elements into the <head> tag.
-*/
-function porto_preprocess_html(&$vars){
- global $parent_root;
-
- $viewport = array(
-   '#type' => 'html_tag',
-   '#tag' => 'meta',
-   '#attributes' => array(
-     'name' => 'viewport',
-     'content' =>  'width=device-width, initial-scale=1, maximum-scale=1',
-   )
- );
-
-  $background_image = array(
-   '#type' => 'markup',
-   '#markup' => "<style type='text/css'>body {background-image:url(".$parent_root."/img/patterns/".theme_get_setting('background_select').".png);}</style> ",
-   '#weight' => 1,
- );
-
- $background_color = array(
-   '#type' => 'markup',
-   '#markup' => "<style type='text/css'>body {background-color: #".theme_get_setting('body_background_color')." !important;}</style> ",
-   '#weight' => 2,
- );
-
- drupal_add_html_head( $viewport, 'viewport');
-
- if (theme_get_setting('body_background') == "porto_backgrounds" && theme_get_setting('site_layout') == "boxed") {
-   drupal_add_html_head( $background_image, 'background_image');
- }
-
- if (theme_get_setting('body_background') == "custom_background_color") {
-   drupal_add_html_head( $background_color, 'background_color');
- }
- // Add boxed class if layout is set that way.
- if (theme_get_setting('site_layout') == 'boxed'){
-   $vars['classes_array'][] = 'boxed';
- }
-
+  if (theme_get_setting('user_css') != '') {
+	  echo "<!-- User defined CSS -->";
+	  echo "<style type='text/css'>";
+	  echo theme_get_setting('user_css');
+	  echo "</style>";
+	  echo "<!-- End user defined CSS -->";	
+  }
 }

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @file views-view--testimonials.tpl.php
- * Contour's views template for the Testimonials view.
+ * @file
+ * Main view template.
  *
  * Variables available:
  * - $classes_array: An array of classes determined in
@@ -27,19 +27,19 @@
  * @ingroup views_templates
  */
 ?>
-<div class="row testimonials">
-<div class="flexslider flexslider-top-title unstyled" data-plugin-options='{"controlNav":false, "slideshow": false, "animationLoop": true, "animation":"slide"}'>
+<?php if ($header): ?>
+  <?php print $header; ?>	    
+<?php endif; ?>
+
+<div class="row">
+  <div class="owl-carousel push-bottom" data-plugin-options='{"items": 1, "autoHeight": true}'>
 							
 	  <?php print render($title_prefix); ?>
 	  <?php if ($title): ?>
 	    <?php print $title; ?>
 	  <?php endif; ?>
 	  <?php print render($title_suffix); ?>
-	  <?php if ($header): ?>
-	    <div class="view-header">
-	      <?php print $header; ?>
-	    </div>
-	  <?php endif; ?>
+	 
 	
 	  <?php if ($exposed): ?>
 	    <div class="view-filters">
@@ -54,9 +54,9 @@
 	  <?php endif; ?>
 	
 	  <?php if ($rows): ?>
-	    <ul class="slides">
+
 	    <?php print $rows; ?>
-	    </ul>
+
 	  <?php elseif ($empty): ?>
 	    <div class="view-empty">
 	      <?php print $empty; ?>

@@ -47,5 +47,5 @@
 
 
 <?php foreach ($items as $delta => $item): ?>
-  <li><?php print render($item); ?></li>
+  <div><div class="img-thumbnail"><?php print render($item); ?></div></div>
 <?php endforeach; ?>

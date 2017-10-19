@@ -1,7 +1,7 @@
 <li>
   <div class="post-image">
 	 <?php if (render($content['field_thumbnail'])) :?>
-	  <div class="thumbnail">
+	  <div class="img-thumbnail">
 	    <a href="<?php print $node_url; ?>">
 	      <?php if (render($content['field_thumbnail'])): ?>  
 	        <img src="<?php echo file_create_url($node->field_thumbnail['und'][0]['uri']); ?>" alt="">
