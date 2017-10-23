@@ -1,6 +1,27 @@
 
 /* General/Defaults */
 
+body,
+button,
+input,
+select,
+textarea {
+	color: #333;
+	font-family: 'Lato', sans-serif !important;
+	font-size: 16px;
+	font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #002D62;
+	font-family: 'Bitter', serif !important;
+}
+
 .btn-default {
     background-color: #A60100;
     border: none;
@@ -10,7 +31,22 @@
     padding: 14px 32px;
 }
 
+.btn-default:hover, 
+.btn-default:focus, 
+.btn-default:active, 
+.btn-default.active, 
+.open .dropdown-toggle.btn-default {
+	color: #fff;
+    background-color: #8F0A01;
+	border: none;
+}
+
 /* Front Page */
+
+p.featured {
+	font-family: 'Lato', sans-serif;
+	font-weight: normal;
+}
 
 .account-cta {
 	background: #efefef;
@@ -28,6 +64,24 @@
 .account-cta p {
     font-size: 21px;
     font-weight: 300;
-    font-family: lato;
+    font-family: 'Lato', sans-serif;
 }
 
+/* Footer */
+
+#footer {
+	background: #A60100;
+	border-top: none;
+	color: #fff;
+}
+
+#footer .footer-copyright {
+	background: #002D5A;
+	border-top: none;
+	font-family: 'Bitter', serif;
+}
+
+#footer p,
+#footer .footer-copyright p {
+	color: #fff;
+}
