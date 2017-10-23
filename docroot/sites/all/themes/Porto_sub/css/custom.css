@@ -1,4 +1,33 @@
-/*=======================================================================
-*** PORTO_SUB STYLE SHEET***
-========================================================================*/
+
+/* General/Defaults */
+
+.btn-default {
+    background-color: #A60100;
+    border: none;
+    color: #fff;
+	font-family: 'Bitter', serif;
+    font-size: 18px;
+    padding: 14px 32px;
+}
+
+/* Front Page */
+
+.account-cta {
+	background: #efefef;
+	margin: 0 0 40px;
+	padding: 40px 0;
+	text-align: center;
+}
+
+.account-cta h2 {
+	color: #002D62;
+	font-size: 36px;
+	text-transform: uppercase;
+}
+
+.account-cta p {
+    font-size: 21px;
+    font-weight: 300;
+    font-family: lato;
+}
 
