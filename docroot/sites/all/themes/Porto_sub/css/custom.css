@@ -124,6 +124,11 @@ p.featured {
     background-image: url(/sites/all/themes/Porto_sub/img/custom-headers/inner-head.jpg) !important;
 }
 
+section.page-top.custom-product {
+    background-color: #8F0A01;
+    border-top-color: #8F0A01;
+}
+
 /* Footer */
 
 #footer {
