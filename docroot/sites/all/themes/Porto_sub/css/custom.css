@@ -22,6 +22,19 @@ h6 {
 	font-family: 'Bitter', serif !important;
 }
 
+.btn-primary,
+.btn-success,
+.pagination > .active > a {
+    border: none;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #A60100;
+    background-image: none;
+    background-repeat: none;
+    filter: none;
+    border-color: none;
+}
+
 .btn-default {
     background-color: #A60100;
     border: none;
@@ -103,6 +116,12 @@ p.featured {
     font-size: 21px;
     font-weight: 300;
     font-family: 'Lato', sans-serif;
+}
+
+/* Internal Pages */
+
+.page-top {
+    background-image: url(/sites/all/themes/Porto_sub/img/custom-headers/inner-head.jpg) !important;
 }
 
 /* Footer */
