@@ -70,18 +70,22 @@ p.featured {
 /* Footer */
 
 #footer {
-	background: #A60100;
+	background: #A60100 !important;
 	border-top: none;
 	color: #fff;
 }
 
 #footer .footer-copyright {
-	background: #002D5A;
-	border-top: none;
+	background: #002D5A !important;
+	border-top: none !important;
 	font-family: 'Bitter', serif;
 }
 
 #footer p,
 #footer .footer-copyright p {
 	color: #fff;
+}
+
+#footer .footer-copyright p {
+	font-weight: 300;
 }
