@@ -99,9 +99,9 @@ p.featured {
 	font-weight: normal;
 }
 
+.account-cta,
 .fund-options {
 	background: #efefef;
-	background-image: url(/sites/all/themes/Porto_sub/img/fund_options-bg.jpg);
 	margin: 0 0 40px;
 	padding: 40px 0 18px;
 	text-align: center;
@@ -117,6 +117,14 @@ p.featured {
     font-size: 21px;
     font-weight: 300;
     font-family: 'Lato', sans-serif;
+}
+
+.fund-options {
+	background-image: url(/sites/all/themes/Porto_sub/img/fund_options-bg.jpg);
+}
+
+.fund-options h2 {
+	color: #fff;
 }
 
 /* Internal Pages */
