@@ -41,7 +41,45 @@ h6 {
 	border: none;
 }
 
+/* Header */
+
+#header nav {
+	font-family: 'Bitter', serif;
+}
+
+#header nav ul.nav-main ul.dropdown-menu, 
+#header nav ul.nav-main li.dropdown.open .dropdown-toggle, 
+#header nav ul.nav-main li.active a, 
+#header nav ul.nav-main li > a:hover, 
+#header nav ul.nav-main li.dropdown:hover a {
+    color: #FFF;
+    background-color: #A60100;
+}
+
+#header nav ul.nav-main ul.dropdown-menu {
+    color: #fff;
+    background-color: #A60100 !important;
+	background-image: none;
+	background-repeat: none;
+    text-shadow: none;
+}
+
 /* Front Page */
+
+.theme-default .nivoSlider img {
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+}
+
+#block-nivo-slider-nivo-slider {
+    margin: 18px auto 40px;
+}
+
+.feature-box.secundary h4 {
+	color: #002D62;
+    font-size: 21px;
+}
 
 p.featured {
 	font-family: 'Lato', sans-serif;
@@ -51,7 +89,7 @@ p.featured {
 .account-cta {
 	background: #efefef;
 	margin: 0 0 40px;
-	padding: 40px 0;
+	padding: 40px 0 18px;
 	text-align: center;
 }
 
