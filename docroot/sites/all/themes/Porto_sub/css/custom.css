@@ -6,7 +6,7 @@ button,
 input,
 select,
 textarea {
-	color: #333;
+	color: #666;
 	font-family: 'Lato', sans-serif !important;
 	font-size: 16px;
 	font-weight: 300;
@@ -18,8 +18,13 @@ h3,
 h4,
 h5,
 h6 {
-	color: #002D62;
-	font-family: 'Bitter', serif !important;
+	color: #333;
+	font-family: 'Roboto Slab', serif !important;
+	font-weight: 400;
+}
+
+body #content a {
+	text-decoration: underline;
 }
 
 .btn-primary,
@@ -39,7 +44,7 @@ h6 {
     background-color: #A60100;
     border: none;
     color: #fff;
-	font-family: 'Bitter', serif;
+	font-family: 'Roboto Slab', serif;
     font-size: 18px;
     padding: 14px 32px;
 }
@@ -54,10 +59,58 @@ h6 {
 	border: none;
 }
 
+#footer .container .row > div {
+	margin-bottom: 0px !important;
+}
+
+/* Bootstrap */
+
+
+
 /* Header */
 
+#header > .container {
+    margin-bottom: -45px;
+}
+
 #header nav {
-	font-family: 'Bitter', serif;
+	font-family: 'Roboto Slab', serif;
+}
+
+#header nav ul.nav-top li a, 
+#header nav ul.nav-top li span {
+    color: #333;
+    font-size: 0.9em;
+	font-weight: 400;
+    padding: 6px 28px;
+}
+
+#header nav .email i.icon-envelope,
+#header nav .phone i.icon-phone-square{
+	color: #A60100;
+	font-size: 17px;
+	margin-right: 8px;
+}
+
+/*
+#header nav .phone i.icon-phone {
+    color: #fff;
+    background: #A60100;
+    padding: 2px 3.5px 1px;
+    border-radius: 5px;
+}
+*/
+
+#header nav ul.nav-top .my-acnt-btn {
+	background: #A60100;
+	border-radius: 0;
+	color: #fff;
+	margin-left: 24px;
+}
+
+#header nav ul.nav-main li a {
+    font-size: 16px;
+    text-transform: none;
 }
 
 #header nav ul.nav-main ul.dropdown-menu, 
@@ -87,16 +140,30 @@ h6 {
 
 #block-nivo-slider-nivo-slider {
     margin: 18px auto 40px;
-}
-
-.feature-box.secundary h4 {
-	color: #002D62;
-    font-size: 21px;
+	max-width: 1140px;
 }
 
 p.featured {
 	font-family: 'Lato', sans-serif;
-	font-weight: normal;
+	font-weight: 300;
+}
+
+.intro-greeting h2 {
+	color: #002D5A;
+    margin-bottom: 8px;
+}
+
+.intro-greeting p.featured {
+    margin-bottom: 40px;
+}
+
+.home-intro.home-intro-compact {
+    display: none;
+}
+
+.feature-box.secundary h4 {
+	color: #333;
+    font-size: 21px;
 }
 
 .account-cta,
@@ -117,25 +184,35 @@ p.featured {
     font-size: 21px;
     font-weight: 300;
     font-family: 'Lato', sans-serif;
+	margin-bottom: 10px;
 }
 
 .fund-options {
 	background-image: url(/sites/all/themes/Porto_sub/img/fund_options-bg.jpg);
+	background-size: cover;
+	-webkit-background-size: cover;
+	padding: 44px 0;
 }
 
 .fund-options h2 {
 	color: #fff;
 }
 
+.fund-options .btn-default {
+	margin-top: 24px;
+	padding: 14px 64px;
+}
+
 /* Internal Pages */
 
 .page-top {
     background-image: url(/sites/all/themes/Porto_sub/img/custom-headers/inner-head.jpg) !important;
+	border-top: 5px solid #8F0A01;
 }
 
 section.page-top.custom-product {
-    background-color: #8F0A01;
-    border-top-color: #8F0A01;
+    background-color: #8F0A01 !important;
+    border-top-color: #8F0A01 !important;
 }
 
 /* Footer */
@@ -146,10 +223,19 @@ section.page-top.custom-product {
 	color: #fff;
 }
 
+footer h2 {
+    font-size: 1.5em;
+}
+
+#footer .footer-copyright #sub-menu {
+	font-weight: 400;
+}
+
 #footer .footer-copyright {
 	background: #002D5A !important;
 	border-top: none !important;
-	font-family: 'Bitter', serif;
+	font-family: 'Roboto Slab', serif;
+	padding: 24px 0 16px;
 }
 
 #footer p,
