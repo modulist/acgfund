@@ -45,11 +45,7 @@
       </div> <!-- /#name-and-slogan -->
 	    <?php endif; ?>
 	    
-	    <?php if (isset($page['header_search'])) : ?>
-	    <div class="search">
-	      <?php print render($page['header_search']); ?>
-	    </div>
-	    <?php endif; ?>
+	    
       
       <!-- /branding --> 
       <div id="header-top">
@@ -59,6 +55,12 @@
 	    <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
 				<i class="icon icon-bars"></i>
 			</button>
+			
+			<?php if (isset($page['header_search'])) : ?>
+	    <div class="search">
+	      <?php print render($page['header_search']); ?>
+	    </div>
+	    <?php endif; ?>
       
     </div>
     

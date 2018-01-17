@@ -10,6 +10,7 @@ stylesheets[all][] = css/custom.css
 
 ; Define theme block regions.
 regions[header_top] = Header Top
+regions[header_search] = Header Search
 regions[branding] = Branding
 regions[header_icons] = Header Icons
 regions[header_menu] = Header Menu
