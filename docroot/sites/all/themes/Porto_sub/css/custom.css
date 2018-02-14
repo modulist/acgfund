@@ -29,6 +29,7 @@ p {
 
 body #content a {
 	text-decoration: underline;
+	font-weight: bold;
 }
 
 .internal-img-wide {
@@ -62,10 +63,10 @@ body #content a {
 	padding: 14px 32px;
 }
 
-.btn-default:hover, 
-.btn-default:focus, 
-.btn-default:active, 
-.btn-default.active, 
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
 .open .dropdown-toggle.btn-default {
 	color: #fff;
 	background-color: #8F0A01;
@@ -103,7 +104,7 @@ body #content a {
 	font-family: 'Roboto Slab', serif;
 }
 
-#header nav ul.nav-top li a, 
+#header nav ul.nav-top li a,
 #header nav ul.nav-top li span {
     color: #333;
     font-size: 0.9em;
@@ -152,10 +153,10 @@ body #content a {
     text-transform: none;
 }
 
-#header nav ul.nav-main ul.dropdown-menu, 
-#header nav ul.nav-main li.dropdown.open .dropdown-toggle, 
-#header nav ul.nav-main li.active a, 
-#header nav ul.nav-main li > a:hover, 
+#header nav ul.nav-main ul.dropdown-menu,
+#header nav ul.nav-main li.dropdown.open .dropdown-toggle,
+#header nav ul.nav-main li.active a,
+#header nav ul.nav-main li > a:hover,
 #header nav ul.nav-main li.dropdown:hover a {
     color: #FFF;
     background-color: #A60100;
@@ -374,7 +375,7 @@ form#webform-client-form-99 {
 .modal-popup i.icon {
 	position: absolute;
 	top: 5px;
-    
+
 }
 
 .modal-popup i.primary {
@@ -524,38 +525,38 @@ footer h2 {
 	#header .logo {
 			text-align: left;
 	}
-	
-	#header nav ul.nav-top li.email, 
+
+	#header nav ul.nav-top li.email,
 	#header nav ul.nav-top li.phone {
 			display: none;
 	}
-	
+
 	li > a.my-acnt-btn {
 			margin-right: 64px;
 	}
 }
 
 /* 767px */
-@media screen and (min-width: 47.938em) {	
+@media screen and (min-width: 47.938em) {
 	#header > .container {
 		width: 100% !important;
 	}
-	
+
 	div#block-webform-client-block-95 {
     width: 50% !important;
 	  float: left;
     padding-right: 10%;
-	}	
-	
+	}
+
 	div#block-block-84 {
     width: 50%;
     float: left;
-	}	
+	}
 }
 
 /* 942px */
-@media screen and (min-width: 58.875em) {	
-	#header nav ul.nav-top li.email, 
+@media screen and (min-width: 58.875em) {
+	#header nav ul.nav-top li.email,
 	#header nav ul.nav-top li.phone {
 			display: inline;
 	}
@@ -563,32 +564,32 @@ footer h2 {
 
 
 /* 991px */
-@media screen and (min-width: 61.938em) {	
-	
+@media screen and (min-width: 61.938em) {
+
 	.page-top {
 		margin-top: 10px;
 	}
-	
+
 	.container {
 		width: 100%;
 		max-width: 1170px;
 	}
-	
+
 	li > a.my-acnt-btn {
 			margin-right: 0;
 	}
-	
+
 	#block-nivo-slider-nivo-slider {
     margin: 12px auto 40px;
-	}	
-	
+	}
+
 	/* Footer */
-	
+
 	#footer .footer-copyright p {
 		margin-bottom: 0px;
 		text-align: left;
 	}
-	
+
 	#footer .footer-copyright #sub-menu {
 		font-weight: 400;
 		text-align: center;
@@ -600,7 +601,7 @@ footer h2 {
 }
 
 /* 1170px */
-@media screen and (min-width: 61.938em) {	
+@media screen and (min-width: 61.938em) {
 	.theme-default .nivoSlider img {
 		-moz-border-radius: 10px 10px 10px 10px !important;
     -webkit-border-radius: 10px 10px 10px 10px !important;
