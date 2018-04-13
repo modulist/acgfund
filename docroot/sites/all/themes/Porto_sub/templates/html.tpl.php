@@ -37,6 +37,15 @@
 
 
 <?php porto_user_css();?>  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113768500-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113768500-1');
+</script>
 </head>
 <body class="<?php print $classes; ?> <?php if (theme_get_setting('site_layout') == 'boxed'){ echo "boxed"; } if (theme_get_setting('background_color') == 'dark'){ echo "dark"; }?>"<?php print $attributes;?>>
 <?php print $page_top; ?>
